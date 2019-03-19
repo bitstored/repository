@@ -56,8 +56,8 @@ func (r *Repository) Read(ctx context.Context, key string, doc interface{}) (uin
 func (r *Repository) Delete(ctx context.Context, key string, cas uint) (uint, error) {
 	b, err := r.bucket()
 	if err != nil {
-		return adaptErr(err)
+		return 0, err
 	}
-	cas, err = b.Remove(key, gocb.Cas(cas))
-	return cas, err
+	cas1, err := b.Remove(key, gocb.Cas(cas))
+	return uint(cas1), err
 }
