@@ -2,9 +2,8 @@ package couchbaserepo_test
 
 import (
 	"context"
+	"github.com/bitstored/repository/pkg/couchbaserepo"
 	"github.com/couchbase/gocb"
-	"github.com/dianabejan/repository/pkg/couchbaserepo"
-	_ "github.com/dianabejan/repository/pkg/repo"
 	"testing"
 )
 

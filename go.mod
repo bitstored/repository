@@ -1,4 +1,4 @@
-module github.com/dianabejan/repository
+module github.com/bitstored/repository
 
 require (
 	github.com/couchbase/gocb v1.5.2
