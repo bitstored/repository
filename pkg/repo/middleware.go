@@ -1,17 +1,12 @@
-package repository
+package repo
 
 import (
 	"bytes"
 	"context"
-	"crypto/aes"
-	"crypto/cipher"
-	"crypto/rand"
 	"crypto/sha512"
 	"encoding/base64"
 	"encoding/json"
-	"errors"
 	"io"
-	"io/ioutil"
 	"strconv"
 	"strings"
 )
@@ -129,57 +124,10 @@ type AESPassphrase struct {
 
 // Encrypt implements the encryption for the EncrypterDecrypter interface.
 func (p *AESPassphrase) Encrypt(w io.Writer, r io.Reader) error {
-	var data bytes.Buffer
-	if _, err := data.ReadFrom(r); err != nil {
-		return err
-	}
-
-	block, err := aes.NewCipher(p.key)
-	if err != nil {
-		return err
-	}
-	gcm, err := cipher.NewGCM(block)
-	if err != nil {
-		return err
-	}
-	nonce := make([]byte, gcm.NonceSize())
-	if _, err = io.ReadFull(rand.Reader, nonce); err != nil {
-		return err
-	}
-	ciphertext := gcm.Seal(nonce, nonce, data.Bytes(), nil)
-	_, err = w.Write(ciphertext)
-	return err
+	return nil
 }
 
 // Decrypt implements the decryption for the EncrypterDecrypter interface.
 func (p *AESPassphrase) Decrypt(w io.Writer, r io.Reader) error {
-	block, err := aes.NewCipher(p.key)
-	if err != nil {
-		return err
-	}
-	gcm, err := cipher.NewGCM(block)
-	if err != nil {
-		return err
-	}
-
-	nonce := make([]byte, gcm.NonceSize())
-	n, err := r.Read(nonce)
-	if err != nil && err != io.EOF {
-		return err
-	}
-	if n != gcm.NonceSize() {
-		return errors.New("could not read GCM Nonce")
-	}
-
-	ciphertext, err := ioutil.ReadAll(r)
-	if err != nil {
-		return nil
-	}
-	plaintext, err := gcm.Open(nil, nonce, ciphertext, nil)
-	if err != nil {
-		return err
-	}
-
-	_, err = w.Write(plaintext)
-	return err
+	return nil
 }
