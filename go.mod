@@ -2,6 +2,7 @@ module github.com/bitstored/repository
 
 require (
 	github.com/couchbase/gocb v1.5.2
+	github.com/go-redis/redis v6.15.2+incompatible
 	github.com/go-stack/stack v1.8.0 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/google/go-cmp v0.2.0 // indirect

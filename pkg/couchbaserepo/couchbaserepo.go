@@ -19,6 +19,10 @@ func NewRepository(b *gocb.Bucket) *Repository {
 	}
 }
 
+func (r *Repository) Close() {
+	r.bucket.Close()
+}
+
 // Create creates a new document. It returns a DocumentExistsError if the key already exists.
 func (r *Repository) Create(ctx context.Context, key string, doc interface{}) (uint, error) {
 	gocbCas, err := r.bucket.Insert(key, doc, r.TTL)
